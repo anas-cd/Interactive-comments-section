@@ -327,10 +327,7 @@ main {
         background-color: $white;
         padding: 1.5rem;
         border-radius: 0.7rem;
-        position: sticky;
-        bottom: 1.5rem;
         transition-duration: 100ms;
-        box-shadow: 2px 0px 5px 2px #5457b62e;
 
         @media #{$mq-620-down} {
             flex-flow: row wrap;
@@ -347,9 +344,10 @@ main {
             }
         }
 
-        &.stuck {
-            border: 1px solid lightgray;
-            box-shadow: 1px 1px 1px 1px gray;
+        &.sticky {
+            position: sticky;
+            bottom: 1.5rem;
+            box-shadow: 2px 0px 5px 2px #5457b62e;
         }
     }
 
@@ -457,10 +455,10 @@ main {
 
         &.rep {
             
-            background-image: url(/images/icon-reply.svg); 
+            background-image: url(../../images/icon-reply.svg); 
             background-repeat: no-repeat;
             background-position: 6px 80px;
-            
+            transition: background-position .1s ease-in;
         }
         &:focus {
             outline: none;

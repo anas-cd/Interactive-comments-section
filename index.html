@@ -24,140 +24,33 @@
         <script src="https://unpkg.com/vue@3"></script>
     </head>
     <body>
-
-        <main id="VueApp">
+        
+        <main id="VueApp"> 
             
             <div class="comments">
-                <div class="thread">
-                    <div class="comment">
-                        <div class="votes">
-                            <div class="upvote"><img src="./images/icon-plus.svg" alt="up vote"></div>
-                            <div class="voteNumber">5</div>
-                            <div class="downvote"><img src="./images/icon-minus.svg" alt="down vote"></div>
-                        </div>
-                        <div class="commentInfo">
-                            <img src="./images/avatars/image-amyrobson.png" alt="image-amyrobson" class="icon">
-                            <span class="username">amyrobson</span>
-                            <div class="you"><span>you</span></div>
-                            <p class="date">1 month ago</p>
-                        </div>
-                        <div class="action">
-                            <div class="reply">
-                                <img src="./images/icon-reply.svg" alt="reply">
-                                <span>Reply</span>
-                            </div>
-                            <div class="delete">
-                                <img src="./images/icon-delete.svg" alt="delete">
-                                <span>Delete</span>
-                            </div>
-                            <div class="edit">
-                                <img src="./images/icon-Edit.svg" alt="Edit">
-                                <span>Edit</span>
-                            </div>
-                        </div>
-                        <div class="content"><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur itaque quos similique quae sit quis quaerat voluptates soluta error reiciendis?Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, laboriosam?</p>
-                        </div>
-                        <textarea name="comment" id="text" cols="30" rows="3" placeholder="Add a comment..."></textarea>
-                        <button>update</button>
-                    </div>
-                    <div class="commentor" id="commentor">
-                        <img src="./images/avatars/image-amyrobson.png" alt="avatar" class="avatar">
-                        <textarea name="comment" id="text" cols="30" rows="3" placeholder="Add a comment..."></textarea>
-                        <button>send</button>
-                        <button>reply</button>
-                    </div>
-                    <div class="replys">
-                        <div class="comment">
-                            <div class="votes">
-                                <div class="upvote"><img src="./images/icon-plus.svg" alt="up vote"></div>
-                                <div class="voteNumber">5</div>
-                                <div class="downvote"><img src="./images/icon-minus.svg" alt="down vote"></div>
-                            </div>
-                            <div class="commentInfo">
-                                <img src="./images/avatars/image-amyrobson.png" alt="image-amyrobson" class="icon">
-                                <span class="username">amyrobson</span>
-                                <div class="you"><span>you</span></div>
-                                <p class="date">1 month ago</p>
-                            </div>
-                            <div class="action">
-                                <div class="reply">
-                                    <img src="./images/icon-reply.svg" alt="reply">
-                                    <span>Reply</span>
-                                </div>
-                                <div class="delete">
-                                    <img src="./images/icon-delete.svg" alt="delete">
-                                    <span>Delete</span>
-                                </div>
-                                <div class="edit">
-                                    <img src="./images/icon-Edit.svg" alt="Edit">
-                                    <span>Edit</span>
-                                </div>
-                            </div>
-                            <div class="content"><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur itaque quos similique quae sit quis quaerat voluptates soluta error reiciendis?Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, laboriosam?</p>
-                            </div>
-                            <textarea name="comment" id="text" cols="30" rows="3" placeholder="Add a comment..."></textarea>
-                            <button>update</button>
-                        </div>
-                        <div class="commentor" id="commentor">
-                            <img src="./images/avatars/image-amyrobson.png" alt="avatar" class="avatar">
-                            <textarea name="comment" id="text" cols="30" rows="3" placeholder="Add a comment..."></textarea>
-                            <button>send</button>
-                            <button>reply</button>
-                        </div>
-                        <div class="comment">
-                            <div class="votes">
-                                <div class="upvote"><img src="./images/icon-plus.svg" alt="up vote"></div>
-                                <div class="voteNumber">5</div>
-                                <div class="downvote"><img src="./images/icon-minus.svg" alt="down vote"></div>
-                            </div>
-                            <div class="commentInfo">
-                                <img src="./images/avatars/image-amyrobson.png" alt="image-amyrobson" class="icon">
-                                <span class="username">amyrobson</span>
-                                <div class="you"><span>you</span></div>
-                                <p class="date">1 month ago</p>
-                            </div>
-                            <div class="action">
-                                <div class="reply">
-                                    <img src="./images/icon-reply.svg" alt="reply">
-                                    <span>Reply</span>
-                                </div>
-                                <div class="delete">
-                                    <img src="./images/icon-delete.svg" alt="delete">
-                                    <span>Delete</span>
-                                </div>
-                                <div class="edit">
-                                    <img src="./images/icon-Edit.svg" alt="Edit">
-                                    <span>Edit</span>
-                                </div>
-                            </div>
-                            <div class="content"><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur itaque quos similique quae sit quis quaerat voluptates soluta error reiciendis?Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, laboriosam?</p></div>
-                        </div>
-                    </div>
-                </div>
+                <thread v-for="(comment, index) in comments" :commentin="comment" ></thread>
             </div>
 
-            <div class="commentor" id="commentor">
-                <img src="./images/avatars/image-amyrobson.png" alt="avatar" class="avatar">
-                <textarea name="comment" id="text" cols="30" rows="3" placeholder="Add a comment..."></textarea>
-                <button>send</button>
-                <button>reply</button>
-            </div>
-
-            <!-- <div class="alertBlocker">
-                <div class="deleteAlert">
-                    <h1>Delete comment</h1>
-                    <p>Are you sure you want to delete this comment? This will remove the comment and can't be undone.</p>
-                    <button>NO, CANCEL</button>
-                    <button>YES, DELETE</button>
-                </div>
-            </div> -->
+             
             
-        </main>
+            <commentor v-if="currentUser.image" :user="currentUser"></commentor>
+           
+            
+
+
+
+          
+            <!-- <alert-blocker></alert-blocker> -->
+        </main> 
 
         <!-- import JavaScript File -->
         <script src="app/dist/all.js"></script>
 
-        <!-- import Vue components -->
+        <!-- import Vue components (redundent if using javascript minifier)-->
+        <!-- <script src="./app/js/VueComps/thread.js"></script> -->
+        <!-- <script src="./app/js/VueComps/commentor.js"></script> -->
+        <!-- <script src="./app/js/VueComps/intersection.js"></script> -->
+        <!-- <script src="./app/js/VueComps/comment.js"></script> -->
 
         <!-- Vue mounting -->
         <script> const mountedApp = VueApp.mount('#VueApp'); </script>
