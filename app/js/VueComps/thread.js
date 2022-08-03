@@ -1,4 +1,5 @@
-VueApp.component('thread', { 
+VueApp.component('thread', {
+    emits: ['score','text'], 
     props: {
         commentin: {
             type: Object,
@@ -13,9 +14,9 @@ VueApp.component('thread', {
     /* html */
     `
     <div class="thread"> 
-        <interaction :context="commentin" :user="user" @del="alert(commentin.id)" :key="commentin.id"></interaction>
+        <interaction :context="commentin" :user="user" @del="alert(commentin.id)" :key="commentin.id" @score="scoreUpdater" @text="textUpdater"></interaction>
         <div class="replys" v-show="isReplied">
-            <interaction v-for="(reply,index) in commentin.replies" :user="user" :context="reply" @del="alert(index)" :key="index"></interaction> 
+            <interaction v-for="(reply,index) in commentin.replies" :user="user" :context="reply" @del="alert(index)" :key="reply.id" @score="scoreUpdater" @text="textUpdater"></interaction> 
         </div>
     </div>
     `,
@@ -27,6 +28,12 @@ VueApp.component('thread', {
     methods: { 
         alert(key) {
             this.$emit('delete',key);
+        },
+        scoreUpdater(id,score) {
+            this.$emit('score',id,score);
+        },
+        textUpdater(id,message) {
+            this.$emit('text',id,message);
         }
     },
     computed: {

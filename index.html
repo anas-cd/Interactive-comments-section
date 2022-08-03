@@ -28,12 +28,12 @@
         <main id="VueApp" > 
             
             <div class="comments">
-                <thread v-for="(comment, index) in comments" :commentin="comment" :user="currentUser" @delete="delAlert"></thread>  
+                <thread v-for="(comment, index) in comments" :commentin="comment" :user="currentUser" @delete="delAlert" @score="scoreUpdater" @text="textUpdater" :key="index"></thread>  
             </div>
 
              
             
-            <commentor v-if="currentUser.image" :user="currentUser" :action="sendAction"></commentor>
+            <commentor v-if="currentUser.image" :user="currentUser" :action="sendAction" @new-thread="addThread"></commentor>
            
 
             <alert-blocker v-show="deletWarning" @alert-cancel="deletWarning=false"></alert-blocker>

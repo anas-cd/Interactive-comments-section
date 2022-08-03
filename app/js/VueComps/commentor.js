@@ -1,4 +1,5 @@
-VueApp.component('commentor', { 
+VueApp.component('commentor', {
+    emits: ['new-thread'], 
     props: {
         user: {
             type: Object
@@ -9,7 +10,7 @@ VueApp.component('commentor', {
             required: true
         },
         commentBy: {
-            type: String,
+            type: Object,
             required: false // it works that way 
         }
     },
@@ -19,7 +20,7 @@ VueApp.component('commentor', {
     <div class="commentor" id="commentor">
         <img :src="avatar" :alt="avatarOf" class="avatar">
         <textarea name="comment" id="text" cols="30" rows="3" placeholder="Add a comment..." :class="(!this.action)? 'rep':''">{{ filler }}</textarea>
-        <button v-show="this.action">send</button>
+        <button v-show="this.action" @click="addThread()">send</button>
         <button v-show="!this.action">reply</button>
     </div>
     `, 
@@ -29,14 +30,17 @@ VueApp.component('commentor', {
         }
     },
     created: function () {
-       
+        
         // console.log(this.user.image.png); 
         
     },
     methods: {
-        
+        addThread() {
+            const message = document.getElementById('text').value;
+            this.$emit('new-thread',message);
+        } 
     },
-    computed: {
+    computed: { 
         avatar() {return this.user.image.png}  
         ,avatarOf() {return "avatar of " + this.user.username} 
         ,updater() {return this.user.image.png},

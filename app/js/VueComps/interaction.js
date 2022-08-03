@@ -1,5 +1,5 @@
 VueApp.component('interaction', {
-    emits: ['del'],
+    emits: ['del','score','text'],
     props: {
         context: {
             type: Object,
@@ -13,8 +13,8 @@ VueApp.component('interaction', {
     template: 
     /* html */
     `
-    <comment :commentData="context" :user="user" :reply="reply" @isReply="replyToggle" @del-alert="deletAlert"></comment>
-    <commentor v-if="user.image" :user="user" v-show="reply" :action="sendAction" :commentBy="context.user.username"></commentor> 
+    <comment :commentData="context" :user="user" :reply="reply" @isReply="replyToggle" @del-alert="deletAlert" @score="scoreUpdater" @text="textUpdater"></comment>
+    <commentor v-if="user.image" :user="user" v-show="reply" :action="sendAction" :commentBy="context"></commentor> 
     `, 
     data: function () {
      return {
@@ -32,6 +32,12 @@ VueApp.component('interaction', {
         },
         deletAlert() {
             this.$emit('del');
+        },
+        scoreUpdater(id,score) {
+            this.$emit('score',id,score);
+        },
+        textUpdater(id,message) {
+            this.$emit('text',id,message);
         }
     },
     computed: {

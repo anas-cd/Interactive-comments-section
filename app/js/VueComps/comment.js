@@ -1,4 +1,5 @@
 VueApp.component('comment', {
+    emits:['isReply','del-alert','score','text'],
     props: {
         commentData: {
             type: Object,
@@ -18,9 +19,9 @@ VueApp.component('comment', {
     `
     <div class="comment">
         <div class="votes">
-            <div class="upvote"><img src="./images/icon-plus.svg" alt="up vote"></div>
-            <div class="voteNumber">{{commentData.score}}</div>
-            <div class="downvote"><img src="./images/icon-minus.svg" alt="down vote"></div>
+            <div class="upvote" @click="updateScore(1)"><img src="./images/icon-plus.svg" alt="up vote"></div>
+            <div class="voteNumber">{{score}}</div>
+            <div class="downvote" @click="updateScore(-1)"><img src="./images/icon-minus.svg" alt="down vote"></div>
         </div>
         <div class="commentInfo">
             <img :src="image" alt="image-amyrobson" class="icon">
@@ -52,17 +53,18 @@ VueApp.component('comment', {
         </div>
         <div class="content" v-show="!editMode"><p>{{commentData.content}}</p>
         </div>
-        <textarea name="comment" id="text" cols="30" rows="3" placeholder="Add a comment..." v-show="editMode">{{commentData.content}}</textarea>
-        <button v-show="editMode">UPDATE</button>
+        <textarea name="comment" :id="textId" cols="30" rows="3" placeholder="Add a comment..." v-show="editMode">{{commentData.content}}</textarea>
+        <button v-show="editMode" @click="updateText">UPDATE</button>
     </div>
     `,
     data: function () { 
         return { 
             editMode: false,
-            isCurrentUser: this.currentUserCheck()
+            isCurrentUser: this.currentUserCheck(),
+            score: this.commentData.score
         }
     },
-    methods: {
+    methods: { 
         currentUserCheck() {
             if (this.user.username == this.commentData.user.username) {
                 return true;
@@ -84,10 +86,32 @@ VueApp.component('comment', {
         },
         deletEmiter() {
             this.$emit('del-alert');
+        },
+        updateScore(x) {
+            if (x > 0) {
+                this.score++; 
+                // updating local storage: 
+                this.$emit('score',this.commentData.id,this.score);
+            } else {
+                if (this.score > 0) {
+                    this.score--;
+                    // updating local storage: 
+                    this.$emit('score',this.commentData.id,this.score);
+                }
+            }
+
+            
+        },
+        updateText() {
+            const message = document.getElementById("text"+this.commentData.id+"").value;
+            this.commentData.content = message; 
+            this.$emit('text',this.commentData.id,message);
+            this.editToggle(); 
         }
     },
     computed: {
-        image() {return this.commentData.user.image.png},
+        image() {return this.commentData.user.image.png}
+        ,textId() {return "text"+this.commentData.id+""} 
         
     }
 });
