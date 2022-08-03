@@ -1,25 +1,32 @@
 {
-  "name": "frontend-boilerplate",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "interactive-comments-section",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
-  "keywords": [],
-  "author": "Anas Ali",
-  "license": "ISC",
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0"
+  },
   "devDependencies": {
-    "autoprefixer": "^10.2.6",
-    "cssnano": "^5.0.6",
-    "gulp": "^4.0.2",
-    "gulp-concat": "^2.6.1",
-    "gulp-postcss": "^9.0.0",
-    "gulp-replace": "^1.1.3",
-    "gulp-sass": "^5.0.0",
-    "gulp-terser": "^2.0.1",
-    "postcss": "^8.3.5",
-    "sass": "^1.35.2"
-  },
-  "dependencies": {}
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "prettier": "^2.4.1",
+    "sass": "^1.32.7",
+    "sass-loader": "^12.0.0"
+  }
 }
