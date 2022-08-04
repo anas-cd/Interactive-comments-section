@@ -1,30 +1,41 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <h1>starting here</h1>
+  <div class="comments">
+    <h2>threadList</h2>
+    <thread-list></thread-list>
+    <thread-list></thread-list>
+  </div>
+  <div class="commentor">
+    <h2>commentor here</h2>
+    <commentEditor></commentEditor>
+  </div>
 </template>
+
+<script>
+import threadList from '@/components/threadList.vue';
+import commentEditor from '@/components/commentEditor.vue';
+
+export default {
+  components: {
+    threadList,
+    commentEditor,
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: 0rem;
+  max-width: 730px;
+  width: 100%;
+  margin: 0 auto;
   color: #2c3e50;
-}
 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  .comments {
+    width: 100%;
   }
 }
 </style>
