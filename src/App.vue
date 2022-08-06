@@ -1,12 +1,12 @@
 <template>
-  <h1>starting here</h1>
   <div class="comments">
-    <h2>threadList</h2>
-    <thread-list></thread-list>
-    <thread-list></thread-list>
+    <thread-list
+      v-for="thread in threads"
+      :key="thread.id"
+      :threadData="thread"
+    ></thread-list>
   </div>
   <div class="commentor">
-    <h2>commentor here</h2>
     <commentEditor></commentEditor>
   </div>
 </template>
@@ -19,6 +19,14 @@ export default {
   components: {
     threadList,
     commentEditor,
+  },
+  created() {
+    this.$store.dispatch('fetchAll');
+  },
+  computed: {
+    threads() {
+      return this.$store.state.totalThreads;
+    },
   },
 };
 </script>
@@ -36,6 +44,16 @@ export default {
 
   .comments {
     width: 100%;
+  }
+
+  .commentor {
+    border-radius: 1rem;
+    width: 100%;
+    &.sticky {
+      position: sticky;
+      bottom: 1.5rem;
+      box-shadow: 2px 0px 5px 2px #5457b62e;
+    }
   }
 }
 </style>

@@ -1,9 +1,16 @@
 <template>
   <div class="thread">
-    <interactionCard></interactionCard>
+    <interactionCard
+      :interactionData="threadData"
+      :key="threadData.id"
+    ></interactionCard>
 
     <div class="replys">
-      <interactionCard></interactionCard>
+      <interactionCard
+        v-for="reply in threadData.replies"
+        :key="reply.id"
+        :interactionData="reply"
+      ></interactionCard>
     </div>
   </div>
 </template>
@@ -11,9 +18,16 @@
 <script>
 import interactionCard from '@/components/interactionCard.vue';
 export default {
+  props: ['threadData'],
   name: 'Thread-list',
   components: {
     interactionCard,
+  },
+  porps: {
+    threadData: {
+      type: Object,
+      required: true,
+    },
   },
 };
 </script>

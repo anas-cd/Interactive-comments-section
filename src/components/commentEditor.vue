@@ -1,30 +1,61 @@
 <template>
   <div class="commentor" id="commentor">
-    <img
-      src="@/assets/images/avatars/image-amyrobson.png"
-      alt="avatarOf"
-      class="avatar"
-    />
+    <img :src="avatar" :alt="avatarOf" class="avatar" />
     <textarea
       name="comment"
       id="text"
       cols="30"
       rows="3"
       placeholder="Add a comment..."
-      class="rep"
+      :class="setRep ? 'rep' : ''"
+      v-model="commentText"
     ></textarea>
-    <button>send</button>
-    <button>reply</button>
+    <button v-show="!setRep">send</button>
+    <button v-show="setRep">reply</button>
   </div>
 </template>
 
 <script>
+// import { mapGetters } from 'vuex';
 export default {
+  props: ['replyTo'],
   name: 'commentEditor',
   data: function () {
     return {
-      avatar: '',
+      commentText: this.replyTo,
     };
+  },
+  // eslint-disable-next-line no-dupe-keys
+  props: {
+    // eslint-disable-next-line vue/no-dupe-keys
+    replyTo: {
+      type: String,
+      required: false,
+    },
+  },
+  computed: {
+    /* this works too instead of def each property by its own*/
+    // ...mapGetters({ avatar: 'getImagePath' }),
+    avatar() {
+      return this.$store.getters.getImagePath(
+        this.$store.state.currentUser.username
+      );
+    },
+    avatarOf() {
+      return this.$store.state.currentUser.username;
+    },
+    isRep() {
+      return this.$store.state.repMode;
+    },
+    setRep() {
+      return this.replyTo ? true : false;
+    },
+  },
+  methods: {},
+  watch: {
+    replyTo() {
+      this.commentText = this.replyTo;
+    },
   },
 };
 </script>
@@ -40,7 +71,7 @@ export default {
   padding: 1.5rem;
   border-radius: 0.7rem;
   transition-duration: 100ms;
-
+  margin-bottom: 1rem;
   @media #{$mq-620-down} {
     flex-flow: row wrap;
     padding: 1rem;
@@ -54,12 +85,6 @@ export default {
     @media #{$mq-620-down} {
       order: 2;
     }
-  }
-
-  &.sticky {
-    position: sticky;
-    bottom: 1.5rem;
-    box-shadow: 2px 0px 5px 2px #5457b62e;
   }
 }
 </style>

@@ -4,45 +4,44 @@
       <div class="upvote">
         <img src="@/assets/images/icon-plus.svg" alt="up vote" />
       </div>
-      <div class="voteNumber">5</div>
+      <div class="voteNumber">{{ commentData.score }}</div>
       <div class="downvote">
         <img src="@/assets/images/icon-minus.svg" alt="down vote" />
       </div>
     </div>
     <div class="commentInfo">
-      <img
-        src="@/assets/images/avatars/image-amyrobson.png"
-        alt="image-amyrobson"
-        class="icon"
-      />
-      <span class="username">username</span>
-      <div class="you"><span>you</span></div>
-      <p class="date">date goes here</p>
+      <img :src="avatar" :alt="avatarOf" class="icon" />
+      <span class="username">{{ commentData.user.username }}</span>
+      <div class="you" v-show="isUser()"><span>you</span></div>
+      <p class="date">{{ commentData.createdAt }}</p>
     </div>
     <div class="action">
-      <div class="reply">
+      <div class="reply" v-show="!isUser()" @click="reply()">
         <img src="@/assets/images/icon-reply.svg" alt="reply" />
         <span>Reply</span>
       </div>
-      <div class="reply">
+      <!-- <div class="reply" v-show="!isUser()" @click="creply()">
         <img src="@/assets/images/icon-reply.svg" alt="reply" />
         <span>Cancel Reply</span>
-      </div>
-      <div class="delete">
+      </div> -->
+      <div class="delete" v-show="!editMode && isUser() ? true : false">
         <img src="@/assets/images/icon-delete.svg" alt="delete" />
         <span>Delete</span>
       </div>
-      <div class="edit">
+      <div class="edit" v-show="!editMode && isUser() ? true : false">
         <img src="@/assets/images/icon-edit.svg" alt="Edit" />
         <span>Edit</span>
       </div>
-      <div class="edit">
+      <div class="edit" v-show="editMode && isUser() ? true : false">
         <img src="@/assets/images/icon-edit.svg" alt="Edit" />
         <span>Discard</span>
       </div>
     </div>
-    <div class="content">
-      <p>content</p>
+    <div class="content" v-show="!editMode">
+      <p>
+        <span class="repTo">{{ replyingTo() }}</span
+        >{{ commentData.content }}
+      </p>
     </div>
     <textarea
       name="comment"
@@ -50,12 +49,58 @@
       cols="30"
       rows="3"
       placeholder="Add a comment..."
+      v-show="editMode && isUser()"
     ></textarea>
-    <button>UPDATE</button>
+    <button v-show="editMode && isUser ? true : false">UPDATE</button>
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  props: ['commentData'],
+  emits: ['reply'],
+  data: function () {
+    return {
+      editMode: false,
+    };
+  },
+  computed: {
+    avatar() {
+      return this.$store.getters.getImagePath(this.commentData.user.username);
+    },
+    avatarOf() {
+      return 'Image-' + this.commentData.user.username;
+    },
+  },
+  // eslint-disable-next-line no-dupe-keys
+  props: {
+    // eslint-disable-next-line vue/no-dupe-keys
+    commentData: {
+      type: Object,
+      required: true,
+    },
+  },
+  methods: {
+    isUser() {
+      if (
+        this.commentData.user.username ===
+        this.$store.state.currentUser.username
+      ) {
+        return true;
+      } else return false;
+    },
+    replyingTo() {
+      // eslint-disable-next-line no-prototype-builtins
+      if (this.commentData.hasOwnProperty('replyingTo')) {
+        return '@' + this.commentData.replyingTo + ' ';
+      }
+    },
+    reply() {
+      this.$emit('reply', this.commentData.user.username);
+    },
+  },
+};
+</script>
 
 <style scoped lang="scss">
 .comment {
@@ -244,6 +289,10 @@
 
       @media #{$mq-620-down} {
         margin: 0;
+      }
+      & > .repTo {
+        color: $moderate_blue;
+        font-weight: 500;
       }
     }
   }
