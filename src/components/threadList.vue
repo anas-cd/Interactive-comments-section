@@ -1,13 +1,12 @@
 <template>
   <div class="thread">
     <interactionCard
-      :interactionData="threadData"
+      :interactionData="threads"
       :key="threadData.id"
     ></interactionCard>
-
-    <div class="replys">
+    <div class="replys" v-if="threads.replies.length">
       <interactionCard
-        v-for="reply in threadData.replies"
+        v-for="reply in threads.replies"
         :key="reply.id"
         :interactionData="reply"
       ></interactionCard>
@@ -27,6 +26,11 @@ export default {
     threadData: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    threads() {
+      return this.threadData;
     },
   },
 };
@@ -83,5 +87,32 @@ export default {
   //   margin-top: -0.5rem;
   //   margin-bottom: 0.5rem;
   // }
+}
+.replies-enter-from {
+  opacity: 0;
+  transform: scale(0.6);
+}
+.replies-enter-to {
+  opacity: 1;
+  transform: scale(1);
+}
+.replies-enter-active {
+  transition: all 0.3s;
+}
+.replies-leave-from {
+  opacity: 1;
+  transform: scale(1);
+}
+.replies-leave-to {
+  opacity: 0;
+  transform: scale(0.6);
+}
+.replies-leave-active {
+  transition: all 0.3s;
+  position: absolute;
+}
+
+.replies-move {
+  transition: all 0.3s ease;
 }
 </style>

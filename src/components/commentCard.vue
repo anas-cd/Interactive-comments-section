@@ -1,11 +1,11 @@
 <template>
   <div class="comment">
     <div class="votes">
-      <div class="upvote">
+      <div class="upvote" @click="updateScore(1)">
         <img src="@/assets/images/icon-plus.svg" alt="up vote" />
       </div>
-      <div class="voteNumber">{{ commentData.score }}</div>
-      <div class="downvote">
+      <div class="voteNumber">{{ score }}</div>
+      <div class="downvote" @click="updateScore(-1)">
         <img src="@/assets/images/icon-minus.svg" alt="down vote" />
       </div>
     </div>
@@ -20,19 +20,37 @@
         <img src="@/assets/images/icon-reply.svg" alt="reply" />
         <span>Reply</span>
       </div>
-      <!-- <div class="reply" v-show="!isUser()" @click="creply()">
+      <!-- <div class="reply" v-show="!isUser() && activeRep" @click="creply()">
         <img src="@/assets/images/icon-reply.svg" alt="reply" />
         <span>Cancel Reply</span>
       </div> -->
-      <div class="delete" v-show="!editMode && isUser() ? true : false">
+      <div
+        class="delete"
+        v-show="!editMode && isUser() ? true : false"
+        @click="delPrompt()"
+      >
         <img src="@/assets/images/icon-delete.svg" alt="delete" />
         <span>Delete</span>
       </div>
-      <div class="edit" v-show="!editMode && isUser() ? true : false">
+      <div
+        class="edit"
+        v-show="!editMode && isUser() ? true : false"
+        @click="
+          editModeSwitch();
+          stashComment();
+        "
+      >
         <img src="@/assets/images/icon-edit.svg" alt="Edit" />
         <span>Edit</span>
       </div>
-      <div class="edit" v-show="editMode && isUser() ? true : false">
+      <div
+        class="edit"
+        v-show="editMode && isUser() ? true : false"
+        @click="
+          editModeSwitch();
+          discardChanges();
+        "
+      >
         <img src="@/assets/images/icon-edit.svg" alt="Edit" />
         <span>Discard</span>
       </div>
@@ -40,7 +58,7 @@
     <div class="content" v-show="!editMode">
       <p>
         <span class="repTo">{{ replyingTo() }}</span
-        >{{ commentData.content }}
+        >{{ commentText }}
       </p>
     </div>
     <textarea
@@ -49,9 +67,22 @@
       cols="30"
       rows="3"
       placeholder="Add a comment..."
+      spellcheck="true"
       v-show="editMode && isUser()"
+      v-model="commentText"
+      :class="commentText == '' ? 'textAreaWarning' : ''"
     ></textarea>
-    <button v-show="editMode && isUser ? true : false">UPDATE</button>
+    <button
+      v-show="editMode && isUser ? true : false"
+      @click="
+        updateComment();
+        editModeSwitch();
+      "
+      :class="commentText == '' ? 'disabled' : ''"
+      :disabled="commentText == ''"
+    >
+      UPDATE
+    </button>
   </div>
 </template>
 
@@ -62,6 +93,11 @@ export default {
   data: function () {
     return {
       editMode: false,
+      commentText: this.commentData.content,
+      commentStash: null,
+      score: this.commentData.score,
+      isReply: false,
+      activeRep: false,
     };
   },
   computed: {
@@ -92,11 +128,70 @@ export default {
     replyingTo() {
       // eslint-disable-next-line no-prototype-builtins
       if (this.commentData.hasOwnProperty('replyingTo')) {
+        this.isReply = true;
         return '@' + this.commentData.replyingTo + ' ';
       }
     },
     reply() {
+      this.activeRep = true;
       this.$emit('reply', this.commentData.user.username);
+    },
+    creply() {
+      this.activeRep = false;
+      this.$emit('reply', this.commentData.user.username);
+    },
+    editModeSwitch() {
+      if (this.editMode) {
+        this.editMode = false;
+      } else this.editMode = true;
+    },
+    stashComment() {
+      this.commentStash = this.commentText;
+    },
+    discardChanges() {
+      this.commentText = this.commentData.content;
+    },
+    updateScore(val) {
+      if (val == -1 && this.score > 0) {
+        this.score += val;
+        const payload = {
+          idenKey: 'id',
+          idenVal: this.commentData.id,
+          targetKey: 'score',
+          newV: this.score,
+        };
+        this.$store.dispatch('updateData', payload);
+      } else if (val == 1) {
+        this.score += val;
+        const payload = {
+          idenKey: 'id',
+          idenVal: this.commentData.id,
+          targetKey: 'score',
+          newV: this.score,
+        };
+        this.$store.dispatch('updateData', payload);
+      }
+    },
+    updateComment() {
+      const payload = {
+        idenKey: 'id',
+        idenVal: this.commentData.id,
+        targetKey: 'content',
+        newV: this.commentText,
+      };
+      this.$store.dispatch('updateData', payload);
+    },
+    delPrompt() {
+      this.$store.dispatch('delPrompt', {
+        id: this.commentData.id,
+        isRep: this.isReply,
+      });
+    },
+  },
+  watch: {
+    commentData() {
+      this.commentText = this.commentData.content;
+      // this.score = this.commentData.score;
     },
   },
 };
@@ -323,6 +418,15 @@ export default {
       grid-row-start: 3;
       grid-row-end: 4;
     }
+  }
+
+  // helpers :
+  & .disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+  }
+  & .textAreaWarning {
+    border-color: $soft-red;
   }
 }
 </style>
