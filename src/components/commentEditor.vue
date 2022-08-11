@@ -1,9 +1,8 @@
 <template>
-  <div class="commentor" id="commentor">
+  <div class="commentor">
     <img :src="avatar" :alt="avatarOf" class="avatar" />
     <textarea
       name="comment"
-      id="text"
       cols="30"
       rows="3"
       placeholder="Add a comment..."

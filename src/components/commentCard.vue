@@ -63,7 +63,6 @@
     </div>
     <textarea
       name="comment"
-      id="1"
       cols="30"
       rows="3"
       placeholder="Add a comment..."
