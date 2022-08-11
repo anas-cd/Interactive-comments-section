@@ -41,7 +41,7 @@ Users should be able to:
 - Create, Read, Update, and Delete comments and replies
 - Upvote and downvote comments
 - **Bonus**: If you're building a purely front-end project, use `localStorage` to save the current state in the browser that persists when the browser is refreshed.
-- **Bonus**: Instead of using the `createdAt` strings from the `data.json` file, try using timestamps and dynamically track the time since the comment or reply was posted.
+<!-- - **Bonus**: Instead of using the `createdAt` strings from the `data.json` file, try using timestamps and dynamically track the time since the comment or reply was posted. -->
 
 ### Screenshot
 
@@ -49,29 +49,34 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [https://github.com/anas-cd/Interactive-comments-section](https://github.com/anas-cd/Interactive-comments-section)
+- Live Site URL: [https://interactive-comments-section.onrender.com/](https://interactive-comments-section.onrender.com/)
 
 ## My process
 
 ### Built with
 
 - Semantic HTML5 markup
-- CSS custom properties
+- SCSS
 - Flexbox
-- CSS Grid
-- Mobile-first workflow
+- axios
+- Vue-cli 
+- Vue components
 - [Vue](https://vuejs.org/) - JS framework
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
+- [Vue docs](https://vuejs.org/guide/introduction.html) 
+- [Vue Transition](https://vuejs.org/guide/built-ins/transition.html#List-Entering-Leaving-Transitions) 
+- [Vue Getters](https://vuex.vuejs.org/guide/getters.html#the-mapgetters-helper) 
+- [how to update nested json](https://www.codegrepper.com/code-examples/javascript/how+to+update+nested+json+value+in+javascript+with+key) 
+- [Array.prototype.find()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find) 
+
 
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
+<!-- - Website - [Add your name here](https://www.your-site.com) -->
+- Frontend Mentor - [@anas-cd](https://www.frontendmentor.io/profile/anas-cd)
+- Twitter - [@AnasCd](https://www.twitter.com/@AnasCd)
 
