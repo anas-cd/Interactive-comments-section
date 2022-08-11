@@ -33,6 +33,6 @@ echo "-- COMMITTING CHANGES --"
 # adding committing and pushing updates to the repo
 git add --all
 git commit -m "deploy time at: $now"
-git push origin H-deployment
+git push origin main
 cd ..
 echo " -- DEPLOYING FINISHED --"

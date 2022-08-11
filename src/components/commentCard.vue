@@ -100,20 +100,20 @@ export default {
       activeRep: false,
     };
   },
-  computed: {
-    avatar() {
-      return this.$store.getters.getImagePath(this.commentData.user.username);
-    },
-    avatarOf() {
-      return 'Image-' + this.commentData.user.username;
-    },
-  },
   // eslint-disable-next-line no-dupe-keys
   props: {
     // eslint-disable-next-line vue/no-dupe-keys
     commentData: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    avatar() {
+      return this.$store.getters.getImagePath(this.commentData.user.username);
+    },
+    avatarOf() {
+      return 'Image-' + this.commentData.user.username;
     },
   },
   methods: {
